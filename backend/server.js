@@ -94,11 +94,12 @@ app.post("/api/pipeline/parallel", async (req, res) => {
 if (process.env.MONGODB_URI) {
   mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => console.log("MongoDB Mongoose connected successfully!"))
-    .catch((err) => console.error("MongoDB Connection Error:", err.message));
+    .then(() => {
+      console.log("MongoDB Mongoose connected successfully!");
+      console.log("Database Name:", mongoose.connection.name);
+      console.log("Database Host:", mongoose.connection.host);
+    })
+    .catch((err) => {
+      console.error("MongoDB Connection Error:", err.message);
+    });
 }
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Agent backend running on port ${PORT}`);
-});
